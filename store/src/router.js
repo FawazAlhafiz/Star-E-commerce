@@ -7,12 +7,11 @@ const routes = [
 		path: "/",
 		name: "Home",
 		component: () => import("@/pages/Home.vue"),
+		meta: {
+			RequireLogin: false,
+		},
 	},
-	{
-		name: "Login",
-		path: "/account/login",
-		component: () => import("@/pages/Login.vue"),
-	},
+	
 ]
 
 const router = createRouter({
@@ -28,13 +27,12 @@ router.beforeEach(async (to, from, next) => {
 		isLoggedIn = false
 	}
 
-	if (to.name === "Login" && isLoggedIn) {
-		next({ name: "Home" })
-	} else if (to.name !== "Login" && !isLoggedIn) {
-		next({ name: "Login" })
-	} else {
-		next()
+	if (to.meta.RequireLogin && !isLoggedIn) {
+		// redirect to login
+		window.location.href = "/login?redirect-to=/store" + to.fullPath
 	}
+	next()
+
 })
 
 export default router
