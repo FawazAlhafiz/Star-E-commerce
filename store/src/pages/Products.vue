@@ -4,8 +4,8 @@
       ✨ Products 👌
     </h1>
     
-    <div v-if="productsResource.data">
-      <p v-for="product in productsResource.list.data" :key="product.name" class="text-gray-600">
+    <div v-if="productslist">
+      <p v-for="product in productslist" :key="product.name" class="text-gray-600">
         {{ product.name }} - {{ product.price }} {{ product.currency }}
       </p>
     </div>
@@ -13,11 +13,15 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import { createListResource } from 'frappe-ui';
+
 const productsResource = createListResource({
   doctype: 'Product',
   fields: ['name', 'preview_image', 'price', 'currency'],
   auto: true,
 });
 
+// store products in computed object
+const productslist = computed(() => productsResource.list.data || []);
 </script>
