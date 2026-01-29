@@ -5,9 +5,14 @@
     </h1>
     
     <div v-if="productslist">
-      <p v-for="product in productslist" :key="product.name" class="text-gray-600">
-        {{ product.name }} - {{ product.price }} {{ product.currency }}
-      </p>
+      <!-- Products List -->
+      
+      <div v-for="product in productslist" :key="product.name" class="text-gray-600">
+        <img :src="product.preview_image" alt="Product Image" class="w-24 h-24"/>
+        <p>{{ product.name }}</p>
+        <span>Price: {{ formatCurrency(product.price, product.currency) }}</span>
+      </div>
+
     </div>
   </div>
 </template>
@@ -15,6 +20,7 @@
 <script setup>
 import { computed } from 'vue';
 import { createListResource } from 'frappe-ui';
+import { formatCurrency } from '@/utils.js';
 
 const productsResource = createListResource({
   doctype: 'Product',
