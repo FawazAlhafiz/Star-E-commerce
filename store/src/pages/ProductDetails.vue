@@ -21,15 +21,19 @@
                 </div>
 
                 <!-- Current Image Preview -->
-                <img :src="currenPreviewImageUrl" alt="Product Preview Image" class="sm:max-w-lg rounded border-2 border-gray-800/25" />
+                <img :src="currenPreviewImageUrl" alt="Product Preview Image" class="max-h-30 sm:max-w-lg rounded border-2 border-gray-800/25" />
             </div>
         
+            <div class="mt-4">
+                <p class="font-bold text-gray-900">{{ formatCurrency(productDoc.price, productDoc.currency) }}</p>
+            </div>
         </div>
     </div>
 </div>
 </template>
 
 <script setup>
+import { formatCurrency } from '@/utils';
 import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { createDocumentResource } from 'frappe-ui';
